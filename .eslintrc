@@ -18,6 +18,15 @@
     "react/prop-types": 0,
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
+    "react/function-component-definition": [
+      {
+        "namedComponents": [
+          "function-declaration",
+          "function-expression",
+          "arrow-function"
+        ]
+      }
+    ],
     "import/newline-after-import": "error"
     // "no-restricted-globals": ["error", "event", "fdescribe"]
   },

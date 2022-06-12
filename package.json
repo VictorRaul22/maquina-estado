@@ -1,5 +1,5 @@
 {
-  "name": "projectinitial",
+  "name": "maquina-estado",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,8 @@
     "analyze": "webpack --config webpack.config.js --analyze",
     "lint": "eslint src/ --fix",
     "format": "prettier --write '{*.js,src/**/*.{js,jsx}}'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "prepare": "husky install"
   },
   "repository": {
@@ -31,10 +33,12 @@
   "bugs": {
     "url": "https://github.com/VictorRaul22/InitialProjectWebpackReact/issues"
   },
-  "homepage": "https://github.com/VictorRaul22/InitialProjectWebpackReact#readme",
+  "homepage": "https://VictorRaul22.github.io/maquina-estado",
   "dependencies": {
+    "@xstate/react": "^3.0.0",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "xstate": "^4.32.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
@@ -54,16 +58,17 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "gh-pages": "^4.0.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "mini-css-extract-plugin": "^2.6.0",
     "prettier": "^2.6.2",
     "terser-webpack-plugin": "^5.3.3",
     "webpack": "^5.73.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.2",
-    "husky": "^8.0.1"
+    "webpack-dev-server": "^4.9.2"
   },
   "husky": {
     "hooks": {
