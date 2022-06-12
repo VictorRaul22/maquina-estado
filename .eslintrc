@@ -40,9 +40,12 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "webpack.config.js"
+        "config": "./webpack.config.js",
+        "env": {
+          "dev": false
+        }
       }
     }
   }
-  // "ignorePatterns": ["src/**/*.css"]
+  // "ignorePatterns": ["src/**/*.css", "./webpack.config.js"]
 }

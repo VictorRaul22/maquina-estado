@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: ["error", { "props": false }] */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -5,6 +6,8 @@ const CssMinimizerPugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const shouldAnalyze = process.argv.includes("--analyze");
+const devtool = 'source-map';
+const mode = 'production';
 const plugins = [
   new HtmlWebpackPlugin({
     template: "./public/index.html",
@@ -15,15 +18,31 @@ const plugins = [
     filename: "css/[name].[contenthash].css",
   }),
 ];
-
-if (shouldAnalyze) {
-  const { BundleAnalyzerPlugin } = module.require("webpack-bundle-analyzer");
-  plugins.push(new BundleAnalyzerPlugin());
+function dev(config) {
+  config.devtool = 'eval-source-map';
+  config.mode = 'development';
+  config.output = {
+    path: path.resolve(__dirname, "dist"),
+    filename: "js/[name].js",
+    publicPath: "/",
+  }
+  // const devPlugins = [
+  // ]
+  // config.plugins.push(...devPlugins);
+  config.devServer = {
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "public"),
+    },
+    compress: true,
+    port: 3000,
+  }
+  config.optimization = {};
 }
-
 const config = {
   entry: "./src/index.js",
-  mode: "production",
+  mode,
+  devtool,
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "js/[name].[contenthash].js",
@@ -31,7 +50,7 @@ const config = {
     clean: true,
   },
   resolve: {
-    extensions: [".js", ",jsx"],
+    extensions: [".js", ".jsx"],
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
       "@container": path.resolve(__dirname, "src/containers"),
@@ -39,7 +58,6 @@ const config = {
       "@hooks": path.resolve(__dirname, "src/hooks"),
     },
   },
-  devtool: "source-map",
   module: {
     rules: [
       // Babel
@@ -81,5 +99,17 @@ const config = {
     },
   },
 };
+// analyzer
+if (shouldAnalyze) {
+  const { BundleAnalyzerPlugin } = module.require("webpack-bundle-analyzer");
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
+module.exports = (env = null) => {
+  /* eslint no-process-env: "error" */
+  if (env.dev && !shouldAnalyze) {
+    dev(config);
+  }
+  // console.log(config)
+  return config;
+};
 
-module.exports = config;
