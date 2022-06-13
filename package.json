@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VictorRaul22/maquina-estad.git"
+    "url": "git+https://github.com/VictorRaul22/maquina-estado.git"
   },
   "keywords": [
     "react",

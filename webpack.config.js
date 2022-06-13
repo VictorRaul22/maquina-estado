@@ -16,6 +16,8 @@ const plugins = [
   }),
   new MiniCssExtractPlugin({
     filename: "css/[name].[contenthash].css",
+
+
   }),
 ];
 function dev(config) {
@@ -48,6 +50,7 @@ const config = {
     filename: "js/[name].[contenthash].js",
     publicPath: "./",
     clean: true,
+    assetModuleFilename: 'images/[hash][ext][query]'
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -80,13 +83,20 @@ const config = {
       // css
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-        exclude: /node_modules/,
+        use: [{
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            //The relative path of the file where the current CSS is located relative to the packed root path dist
+            publicPath: '../'
+          }
+        }, "css-loader"],
+        exclude: path.resolve(__dirname, 'node_modules'),
       },
       // assets
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        type: "asset",
+        test: /\.(jpg|png|svg|gif)$/,
+        type: 'asset/resource',
+        // https://webpack.js.org/guides/asset-modules/
       },
     ],
   },
